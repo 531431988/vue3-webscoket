@@ -1,4 +1,5 @@
-# vue antd 练习
+# ant-design-vue
+带登录验证的基本脚手架
 
 ---
 
@@ -11,16 +12,20 @@
 ### 文件结构
 
 ```shell
-├── components      组件库
 ├── public          打包所需静态资源
-├── template        组件开发模版文件
 └── src
-    ├── api         AJAX请求
+    ├── api         axios请求
     └── assets      项目静态资源
         ├── icons   自定义图标资源
-        └── images  图片资源
-    ├── components  业务组件
+        └── imgs    图片资源
+    ├── components  全局组件
+    ├── config      全局相关配置
+    ├── directive   自定义指令
+    ├── less        全局通用less
     ├── mock        mock模拟数据
+    ├── plugins     插件配置
     ├── router      路由配置
+    ├── store       vuex配置
+    ├── utils       工具类库
     ├── views       页面文件
 ```

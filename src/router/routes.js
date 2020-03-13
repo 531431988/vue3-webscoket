@@ -9,7 +9,7 @@ const routers = [
     path: '/index',
     component: () => import('@/views/index.vue')
   }, {
-    path: '/404',
+    path: '*',
     component: () => import(/* webpackChunkName: "fail" */ '@/views/error/404.vue')
   }
 ]

@@ -2,11 +2,11 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
-import '@/plugins/libs'
+import '@/utils/core'
 import '@/permission'
 import '@babel/polyfill'
 import '@/plugins/ant-design-vue'
-import '@/WMlib.less'
+import '@/less/WMlib.less'
 
 if (process.env.NODE_ENV !== 'production') require('@/mock')
 Vue.config.productionTip = false
