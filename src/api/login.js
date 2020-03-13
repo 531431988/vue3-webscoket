@@ -9,12 +9,16 @@ export function login (data) {
   })
 }
 
-export function getCurrentUserNav (token) {
+export function getInfo () {
   return axios({
-    url: '/user/nav',
-    method: 'get'
+    url: '/user/info',
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
+
 
 export function logout () {
   return axios({

@@ -10,11 +10,11 @@ export default {
   },
   methods: {
     handleSubmit () {
-      this.$store.dispatch('Login', {username: '', password: ''}).then((res) => this.loginSuccess(res))
+      this.$store.dispatch('Login', {username: '', password: ''}).then(res => this.loginSuccess(res))
       .catch(err => this.requestFailed(err))
     },
     loginSuccess (res) {
-      this.$router.push({ path: '/' })
+      this.$router.push({path: '/'})
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
