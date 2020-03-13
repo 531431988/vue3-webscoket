@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import routes from './routers'
+import routes from './routes'
+
 Vue.use(Router)
-const router = new Router({
-  routes,
-  mode: 'hash'
-})
 
-router.afterEach(to => {
-  window.scrollTo(0, 0)
+export default new Router({
+  mode: 'history',
+  base: process.env.VUE_APP_PUBLIC_PATH,
+  scrollBehavior: () => ({ y: 0 }),
+  routes
 })
-
-export default router

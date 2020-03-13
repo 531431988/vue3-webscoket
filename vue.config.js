@@ -1,5 +1,5 @@
+
 const path = require('path')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const IS_PROD = process.env.NODE_ENV === 'production'
@@ -25,7 +25,6 @@ module.exports = {
       //内部为正则表达式  vue结尾的
       .set('vue$', 'vue/dist/vue.esm.js')
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
-      .set('_c', resolve('src/components'))
       .set('@ant-design/icons/lib/dist$', resolve('./icons.js'))
     // 压缩图片
     config.module
@@ -39,16 +38,6 @@ module.exports = {
         gifsicle: { interlaced: false },
         webp: { quality: 75 }
       })
-    // 打包分析
-    if (IS_PROD) {
-      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-        {
-          analyzerMode: 'static'
-        }
-      ])
-      // 利用splitChunks单独打包第三方模块
-      config.optimization.delete('splitChunks')
-    }
 
     return config
   },
@@ -67,10 +56,6 @@ module.exports = {
         })
       )
       config.plugins = [...config.plugins, ...plugins]
-      // cdn引用时配置externals
-      // config.externals = {
-      //   vue: 'Vue'
-      // }
 
       // 利用splitChunks单独打包第三方模块
       config.optimization = {
@@ -106,9 +91,6 @@ module.exports = {
       preProcessor: 'less',
       patterns: [resolve('./src/theme.less')]
     },
-    // webpackBundleAnalyzer: {
-    //   openAnalyzer: true
-    // }
   },
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   productionSourceMap: false

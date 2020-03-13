@@ -1,5 +1,5 @@
 <template>
-  <div>1</div>
+  <div>首页</div>
 </template>
 
 <script>
@@ -7,10 +7,7 @@ export default {
   components: {
   },
   created () {
-    this.$get('del').then(res => {
-      console.log('del',res)
-    })
-  },
+  }
 
 }
 </script>
