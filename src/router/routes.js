@@ -4,7 +4,7 @@ const routers = [
     component: () => import('@/views/login.vue')
   }, {
     path: '/',
-    redirect: '/index',
+    redirect: '/index'
   }, {
     path: '/index',
     component: () => import('@/views/index.vue')

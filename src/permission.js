@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
           console.log(res)
           const { code } = res
           // 获取用户信息成功跳转首页
-          if(code === 200) {
+          if (code === 200) {
             next()
           } else {
             // token过时跳转登录页
@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
               next({ path: LOGIN_PAGE })
             })
           }
-        }).catch(err => {
+        }).catch(() => {
           notification.error({
             message: '错误',
             description: '请求用户信息失败，请重试'

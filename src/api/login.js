@@ -19,7 +19,6 @@ export function getInfo () {
   })
 }
 
-
 export function logout () {
   return axios({
     url: '/auth/logout',
