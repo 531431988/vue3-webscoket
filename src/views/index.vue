@@ -1,6 +1,11 @@
 <template>
   <div>
-    <a-input-search style="margin-bottom: 8px" placeholder="Search" @change="onChange" />
+    <a-input-search
+      v-model="searchValue"
+      style="margin-bottom: 8px"
+      placeholder="Search"
+      @change="onChange"
+    />
     <a-tree
       selectable
       multiple
@@ -14,12 +19,13 @@
       }"
       :tree-data="treeData"
       @select="onSelect"
+      @expand="(keys) => expandedKeys = keys"
     >
       <a-icon type="caret-down" slot="switcherIcon" />
       <template #title="{name}">
         <span v-if="name.indexOf(searchValue) > -1">
           {{ name.substr(0, name.indexOf(searchValue)) }}
-          <span style="color: #f50">{{ searchValue }}</span>
+          <span style="color: red">{{ searchValue }}</span>
           {{ name.substr(name.indexOf(searchValue) + searchValue.length) }}
         </span>
         <span v-else>{{ name }}</span>
@@ -127,19 +133,23 @@ export default {
       this.newTreeData = []
       if (value) {
         this.filterTree(this.oldTreeData, value)
-        this.treeData = this.newTreeData
+        this.treeData = [...this.newTreeData]
       } else {
-        this.treeData = this.oldTreeData
+        this.treeData = [...this.oldTreeData]
       }
+      console.log(this.treeData)
     },
     // 过滤tree
     filterTree (data, name) {
-      data.forEach(item => {
+      for (var i in data) {
         // 过滤关键字
-        if (item.name.indexOf(name) !== -1) this.newTreeData.push(item)
-        // 递归
-        if (item.children && item.children.length) this.filterTree(item.children, name)
-      })
+        if (data[i].name.indexOf(name) !== -1) {
+          this.newTreeData.push(data[i])
+        } else {
+          // 递归
+          this.filterTree(data[i].children, name)
+        }
+      }
     }
   }
 
