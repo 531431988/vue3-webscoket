@@ -7,7 +7,6 @@ import '@/permission'
 import '@babel/polyfill'
 import '@/plugins/ant-design-vue'
 import '@/less/WMlib.less'
-
 if (process.env.NODE_ENV !== 'production') require('@/mock')
 Vue.config.productionTip = false
 

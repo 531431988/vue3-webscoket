@@ -22,7 +22,6 @@
       }"
           :tree-data="treeData"
           @select="onSelect"
-          @expand="(keys) => expandedKeys = keys"
         >
           <a-icon type="caret-down" slot="switcherIcon" />
           <template #title="{name}">
@@ -40,7 +39,9 @@
       <a-col :span="18">
         <a-row class="pl15" :gutter="30">
           <a-col :span="8" v-for="(item, index) in videoList" :key="index">
-            <a-card class="mb15" :title="item.name"></a-card>
+            <a-card class="mb15" :title="item.name" :bodyStyle="{padding: 0}">
+              <VideoPlayer v-if="item.src" :src="item.src" />
+            </a-card>
           </a-col>
         </a-row>
       </a-col>
@@ -49,13 +50,17 @@
 </template>
 
 <script>
-import { getTree } from '@/api'
+import { VideoPlayer } from '@/components'
+import { getLiveTree, getLiveUrl } from '@/api'
 export default {
   props: {
     max: {
       type: Number,
       default: 9
     }
+  },
+  components: {
+    VideoPlayer
   },
   data () {
     return {
@@ -67,10 +72,11 @@ export default {
       newTreeData: [],
       oldTreeData: [],
       videoList: []
+
     }
   },
   created () {
-    getTree().then(res => {
+    getLiveTree().then(res => {
       const { data } = res
       this.recursionData(data, (item, index) => {
         if (item.id === '99') {
@@ -105,9 +111,22 @@ export default {
       })
       this.treeData = data
       this.oldTreeData = data
+      this.getVideoUrl()
     })
   },
   methods: {
+    // 获取视频地址
+    async getVideoUrl () {
+      for (let index = 0; index < this.videoList.length; index++) {
+        const item = this.videoList[index]
+        const { status, data } = await getLiveUrl(item.id)
+        if (status === 200) {
+          item.src = data
+          this.videoList.splice(index, 1, item)
+        }
+      }
+      console.log(this.videoList)
+    },
     // 选择节点
     onSelect (selectedKeys, { node, nativeEvent, selected }) {
       let { videoList } = this
@@ -187,4 +206,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#video {
+  width: 300px;
+  height: 500px;
+}
 </style>
