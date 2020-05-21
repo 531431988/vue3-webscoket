@@ -6,6 +6,7 @@
           v-model="searchValue"
           style="margin-bottom: 8px"
           placeholder="Search"
+          allowClear
           @change="onChange"
         />
         <a-tree
@@ -108,24 +109,31 @@ export default {
   },
   methods: {
     // 选择节点
-    onSelect (selectedKeys, node) {
-      // const keys = [...selectedKeys]
-      // keys.unshift(keys.pop())
-      // this.selectedKeys = keys
+    onSelect (selectedKeys, { node, nativeEvent, selected }) {
+      let { videoList } = this
       this.selectedKeys = selectedKeys
-      let selectedNodes = [...node.selectedNodes]
       if (this.selectedKeys.length >= this.max) {
         // 选中的节点
         this.selectedKeys = selectedKeys.slice(0, this.max)
-        // 选中的视频列表
-        selectedNodes = selectedNodes.slice(0, this.max)
-        this.videoList = this.getCheckedVideo(selectedNodes)
         this.$message.info(`最多只能选中${this.max}个`)
       }
-      if (node.selected) {
-        selectedNodes.unshift(selectedNodes.pop())
+      // 选中的视频列表
+      if (selected) {
+        // 如果大于9个取前9
+        if (videoList.length >= this.max) {
+          videoList = videoList.slice(0, this.max)
+        } else {
+          // 否则追加
+          videoList.push({
+            name: nativeEvent.target.innerText,
+            id: node.eventKey
+          })
+          videoList.unshift(videoList.pop())
+        }
+      } else {
+        videoList = videoList.filter(item => item.id !== node.eventKey)
       }
-      this.videoList = this.getCheckedVideo(selectedNodes)
+      this.videoList = videoList
     },
     // 获取选中的数据列表
     getCheckedVideo (data = []) {
