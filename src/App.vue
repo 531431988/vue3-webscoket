@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <router-view />
 </template>
+
 <script>
+import {
+  ref,
+  computed,
+  reactive,
+  toRefs
+} from 'vue';
 export default {
-}
+};
 </script>
-<style lang="less" scoped>
-#app {
-  height: 100vh;
-}
-</style>
+
+<style></style>

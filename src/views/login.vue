@@ -1,37 +1,37 @@
 <template>
-  <a-button type="primary" @click="handleSubmit">登录</a-button>
+  <div>
+    <input v-model="username" />
+    {{username}}
+    <button @click="onLogin">进入聊天室</button>
+  </div>
 </template>
-
 <script>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
-  components: {
-  },
-  created () {
-  },
-  methods: {
-    handleSubmit () {
-      this.$store.dispatch('Login', { username: '', password: '' }).then(res => this.loginSuccess(res)).catch(err => this.requestFailed(err))
-    },
-    loginSuccess (res) {
-      this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `小明欢迎回来`
-        })
-      }, 1000)
-    },
-    requestFailed (err) {
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
-      })
+  setup () {
+    const username = ref('')
+    const router = useRouter()
+    onMounted(() => {
+      username.value = localStorage.getItem('username')
+      if (username.value) {
+        router.push('/')
+      }
+    })
+    return {
+      username,
+      onLogin: () => {
+        const leg = 6
+        const value = username.value.trim()
+        if (value.length < leg) {
+          alert(`用户名不能小于${leg}位`)
+          return
+        }
+        localStorage.setItem('username', value)
+        username.value = ''
+        router.push('/')
+      }
     }
   }
-
 }
 </script>
-<style lang="less" scoped>
-</style>

@@ -5,16 +5,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 module.exports = {
   presets: [
-    [
-      '@vue/app',
-      {
-        modules: false,
-        targets: {
-          browsers: ['> 1%', 'last 2 versions', 'not ie <= 8', 'Android >= 4', 'iOS >= 8']
-        },
-        useBuiltIns: 'entry'
-      }
-    ]
+    '@vue/cli-plugin-babel/preset'
   ],
   plugins: [
     ...plugins,
@@ -22,7 +13,7 @@ module.exports = {
       'import',
       {
         libraryName: 'ant-design-vue',
-        libraryDirectory: 'lib',
+        libraryDirectory: 'es',
         style: true
       }
     ]

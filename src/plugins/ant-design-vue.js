@@ -1,66 +1,21 @@
-import Vue from 'vue'
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Dropdown,
-  Tree,
-  DatePicker,
-  Card,
-  Menu,
-  Table,
-  Tabs,
-  Divider,
-  Icon,
-  Badge,
-  Avatar,
-  Carousel,
-  Modal,
-  Empty,
-  message,
-  notification,
-  ConfigProvider
-} from 'ant-design-vue'
-
-const { Meta } = Card
-const { TabPane } = Tabs
-const MenuItem = Menu.Item
-const SubMenu = Menu.SubMenu
-const MenuDivider = Menu.Divider
-const MenuItemGroup = Menu.ItemGroup
-
+import { Button, Checkbox, Form, Input } from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+const CheckboxGroup = Checkbox.Group
+const FormItem = Form.Item
 const components = [
-  Row,
-  Col,
-  Input,
-  Button,
-  Dropdown,
-  Tree,
-  DatePicker,
-  Meta,
-  Card,
-  Menu, MenuItem, SubMenu, MenuDivider, MenuItemGroup,
-  Table,
-  Tabs, TabPane,
-  Divider,
-  Icon,
-  Badge,
-  Avatar,
-  Carousel,
-  Modal,
-  Empty,
-  ConfigProvider
+  Form, FormItem,
+  Input, 
+  Checkbox,
+  CheckboxGroup,
+  Button
 ]
-components.map(component => {
-  Vue.use(component)
-})
 
-Vue.prototype.$notification = notification
-Vue.prototype.$info = Modal.info
-Vue.prototype.$success = Modal.success
-Vue.prototype.$error = Modal.error
-Vue.prototype.$warning = Modal.warning
-Vue.prototype.$confirm = Modal.confirm
-Vue.prototype.$destroyAll = Modal.destroyAll
-Vue.prototype.$message = message
+const ant = {
+  install(Vue) {
+    components.map(component => {
+      Vue.use(component)
+    })
+  },
+};
+
+export default ant;

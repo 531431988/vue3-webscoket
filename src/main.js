@@ -1,17 +1,6 @@
-import Vue from 'vue'
-import App from '@/App.vue'
-import router from '@/router'
-import store from '@/store'
-import '@/libs/core'
-import '@/permission'
-import '@babel/polyfill'
-import '@/plugins/ant-design-vue'
-import '@/less/WMlib.less'
-if (process.env.NODE_ENV !== 'production') require('@/mock')
-Vue.config.productionTip = false
+import antd from '@/plugins/ant-design-vue';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+createApp(App).use(antd).use(router).mount('#app')
